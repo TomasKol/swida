@@ -1,9 +1,18 @@
 from django.urls import path
 
-from transport_management_core.views.views_driver import DriverDetailView, DriverListView
+from transport_management_core.views.views_driver import (
+    DriverDetailView,
+    DriverListView,
+)
 from transport_management_core.views.views_order import OrderDetailView, OrderListView
-from transport_management_core.views.views_position import PositionCreateView, PositionDetailView
-from transport_management_core.views.views_vehicle import VehicleDetailView, VehicleListView
+from transport_management_core.views.views_position import (
+    PositionCreateView,
+    PositionDetailView,
+)
+from transport_management_core.views.views_vehicle import (
+    VehicleDetailView,
+    VehicleListView,
+)
 
 urlpatterns = [
     path("/drivers", DriverListView.as_view()),
