@@ -1,6 +1,8 @@
 import pytest
 from rest_framework.test import APIClient
-from testing.factoryboy import VehicleFactory
+
+from testing.factoryboy import PositionFactory, VehicleFactory
+from transport_management_core.models.position import Position
 from transport_management_core.models.vehicle import Vehicle, VehicleTypeChoices
 
 client = APIClient()
@@ -150,3 +152,16 @@ def test_vehicle_detail_delete_204(db):
 
     with pytest.raises(Vehicle.DoesNotExist):
         Vehicle.objects.get(pk=vehicle.pk)
+
+
+def test_vehicle_current_position(db):
+    """Test vehicle.current_position getter"""
+
+    vehicle = VehicleFactory()
+    for num in range(3):
+        PositionFactory(vehicle=vehicle, x_coordinate=num, y_coordinate=num)
+
+    latest_position = vehicle.position_set.order_by("-timestamp").first()
+
+    assert vehicle.current_position.x_coordinate == latest_position.x_coordinate
+    assert vehicle.current_position.y_coordinate == latest_position.y_coordinate

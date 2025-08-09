@@ -1,5 +1,6 @@
 import pytest
 from rest_framework.test import APIClient
+
 from testing.factoryboy import DriverFactory
 from transport_management_core.models.driver import Driver
 

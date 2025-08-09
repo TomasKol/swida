@@ -1,6 +1,6 @@
 from rest_framework import generics
 
-from transport_management_core.models.order import Order
+from transport_management_core.models import Order
 from transport_management_core.serializers.serializers_order import OrderSerializer
 
 

@@ -1,5 +1,6 @@
 import pytest
 from rest_framework.test import APIClient
+
 from testing.factoryboy import (
     DriverFactory,
     OrderFactory,
@@ -41,10 +42,20 @@ def test_orders_list(db):
             "id": 1,
             "driver": None,
             "vehicle": None,
+            "pickup_address": {
+                "id": 1,
+                "address": "",
+                "x_coordinate": -1.0,
+                "y_coordinate": -1.0,
+            },
+            "delivery_address": {
+                "id": 2,
+                "address": "",
+                "x_coordinate": -1.0,
+                "y_coordinate": -1.0,
+            },
             "order_number": "order number 0",
             "customer_name": "",
-            "pickup_address": "",
-            "delivery_address": "",
             "weight": 12.3,
             "status": "new",
         },
@@ -52,10 +63,20 @@ def test_orders_list(db):
             "id": 2,
             "driver": None,
             "vehicle": None,
+            "pickup_address": {
+                "id": 3,
+                "address": "",
+                "x_coordinate": -1.0,
+                "y_coordinate": -1.0,
+            },
+            "delivery_address": {
+                "id": 4,
+                "address": "",
+                "x_coordinate": -1.0,
+                "y_coordinate": -1.0,
+            },
             "order_number": "order number 1",
             "customer_name": "",
-            "pickup_address": "",
-            "delivery_address": "",
             "weight": 12.3,
             "status": "new",
         },
@@ -76,10 +97,20 @@ def test_orders_list(db):
                 "cost_per_km": 12.3,
                 "is_available": True,
             },
+            "pickup_address": {
+                "id": 5,
+                "address": "",
+                "x_coordinate": -1.0,
+                "y_coordinate": -1.0,
+            },
+            "delivery_address": {
+                "id": 6,
+                "address": "",
+                "x_coordinate": -1.0,
+                "y_coordinate": -1.0,
+            },
             "order_number": "order number",
             "customer_name": "",
-            "pickup_address": "",
-            "delivery_address": "",
             "weight": 12.3,
             "status": "in transit",
         },
@@ -92,12 +123,20 @@ def test_orders_create_201(db):
     data = {
         "order_number": "ecv",
         "customer_name": "Anicka Ancovicka",
-        "pickup_address": "home",
-        "delivery_address": "office",
+        "pickup_address": {
+            "address": "address 1",
+            "x_coordinate": 100,
+            "y_coordinate": 100,
+        },
+        "delivery_address": {
+            "address": "address 2",
+            "x_coordinate": 900,
+            "y_coordinate": 900,
+        },
         "weight": 12.3,
         # new orders don't have drivers and vehicles assigned by the logic
     }
-    response = client.post(URL, data)
+    response = client.post(URL, data, format="json")
     assert response.status_code == 201
     response_json = response.json()
     response_json.pop("date_created")
@@ -105,10 +144,20 @@ def test_orders_create_201(db):
         "id": 1,
         "driver": None,
         "vehicle": None,
+        "pickup_address": {
+            "id": 1,
+            "address": "address 1",
+            "x_coordinate": 100.0,
+            "y_coordinate": 100.0,
+        },
+        "delivery_address": {
+            "id": 2,
+            "address": "address 2",
+            "x_coordinate": 900.0,
+            "y_coordinate": 900.0,
+        },
         "order_number": "ecv",
         "customer_name": "Anicka Ancovicka",
-        "pickup_address": "home",
-        "delivery_address": "office",
         "weight": 12.3,
         "status": "new",
     }
@@ -126,6 +175,34 @@ def test_orders_create_missing_fields(db):
         "pickup_address": ["This field is required."],
         "delivery_address": ["This field is required."],
         "weight": ["This field is required."],
+    }
+
+
+def test_orders_create_same_addresses_400(db):
+    """Test POST at /api/orders/ 400 - addresses are the same"""
+
+    data = {
+        "order_number": "ecv",
+        "customer_name": "Anicka Ancovicka",
+        "pickup_address": {
+            "address": "address 1",
+            "x_coordinate": 100,
+            "y_coordinate": 100,
+        },
+        "delivery_address": {
+            "address": "address 2",
+            "x_coordinate": 100,
+            "y_coordinate": 100,
+        },
+        "weight": 12.3,
+        # new orders don't have drivers and vehicles assigned by the logic
+    }
+    response = client.post(URL, data, format="json")
+    assert response.status_code == 400
+    assert response.json() == {
+        "non_field_errors": [
+            "pickup and delivery address mut not have the same coordinates"
+        ]
     }
 
 
@@ -155,10 +232,20 @@ def test_orders_detail_get_200(db):
             "cost_per_km": 12.3,
             "is_available": True,
         },
+        "pickup_address": {
+            "id": 1,
+            "address": "",
+            "x_coordinate": -1.0,
+            "y_coordinate": -1.0,
+        },
+        "delivery_address": {
+            "id": 2,
+            "address": "",
+            "x_coordinate": -1.0,
+            "y_coordinate": -1.0,
+        },
         "order_number": "",
         "customer_name": "",
-        "pickup_address": "",
-        "delivery_address": "",
         "weight": 12.3,
         "status": "new",
     }
@@ -174,7 +261,6 @@ def test_orders_detail_patch_200(db):
     assert response.status_code == 200
     response_json = response.json()
     response_json.pop("date_created")
-
     assert response_json == {
         "id": 1,
         "driver": {
@@ -192,10 +278,20 @@ def test_orders_detail_patch_200(db):
             "cost_per_km": 12.3,
             "is_available": True,
         },
+        "pickup_address": {
+            "id": 1,
+            "address": "",
+            "x_coordinate": -1.0,
+            "y_coordinate": -1.0,
+        },
+        "delivery_address": {
+            "id": 2,
+            "address": "",
+            "x_coordinate": -1.0,
+            "y_coordinate": -1.0,
+        },
         "order_number": "edited ON",
         "customer_name": "",
-        "pickup_address": "",
-        "delivery_address": "",
         "weight": 12.3,
         "status": "new",
     }

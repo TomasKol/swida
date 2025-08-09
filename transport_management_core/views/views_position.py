@@ -10,12 +10,4 @@ class PositionCreateView(generics.CreateAPIView):
     """Create view for model Position"""
 
     serializer_class = PositionSerializer
-    queryset = Position.objects.all()
-
-
-class PositionDetailView(generics.RetrieveAPIView):
-    """Get detail view for model Position"""
-
-    serializer_class = PositionSerializer
-    queryset = Position.objects.all()
-    lookup_field = "pk"
+    queryset = Position.objects.none()

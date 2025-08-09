@@ -1,5 +1,14 @@
 import factory
-from transport_management_core.models import Driver, Order, Position, Vehicle
+
+from transport_management_core.models import Address, Driver, Order, Position, Vehicle
+
+
+class AddressFactory(factory.django.DjangoModelFactory):
+    x_coordinate = -1
+    y_coordinate = -1
+
+    class Meta:
+        model = Address
 
 
 class DriverFactory(factory.django.DjangoModelFactory):
@@ -19,6 +28,8 @@ class VehicleFactory(factory.django.DjangoModelFactory):
 
 
 class OrderFactory(factory.django.DjangoModelFactory):
+    pickup_address = factory.SubFactory(AddressFactory)
+    delivery_address = factory.SubFactory(AddressFactory)
     vehicle = factory.SubFactory(VehicleFactory)
     driver = factory.SubFactory(DriverFactory)
     weight = 12.3

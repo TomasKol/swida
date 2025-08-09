@@ -24,8 +24,12 @@ class Order(models.Model):
         "Driver", null=True, blank=True, on_delete=models.SET_NULL
     )
     customer_name = models.CharField(max_length=50)
-    pickup_address = models.CharField(max_length=15)
-    delivery_address = models.CharField(max_length=15)
+    pickup_address = models.ForeignKey(
+        "Address", on_delete=models.PROTECT, related_name="orders_pick_up"
+    )
+    delivery_address = models.ForeignKey(
+        "Address", on_delete=models.PROTECT, related_name="orders_delivery"
+    )
     weight = models.FloatField(help_text="Total weight of the load in kg")
     status = models.CharField(
         choices=OrderStatusChoices.choices, default=OrderStatusChoices.NEW
