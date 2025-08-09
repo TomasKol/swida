@@ -8,7 +8,7 @@ class Driver(models.Model):
 
     name = models.CharField(max_length=30)
     phone_number = models.CharField(max_length=15)
-    licence_number = models.CharField(max_length=15, unique=True)
+    license_number = models.CharField(max_length=15, unique=True)
     is_available = models.BooleanField()
 
     def __str__(self):

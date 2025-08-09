@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
                 ),
                 ("name", models.CharField(max_length=30)),
                 ("phone_number", models.CharField(max_length=15)),
-                ("licence_number", models.CharField(max_length=15, unique=True)),
+                ("license_number", models.CharField(max_length=15, unique=True)),
                 ("is_available", models.BooleanField()),
             ],
         ),
@@ -97,7 +97,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("order_number", models.CharField(max_length=15, unique=True)),
-                ("customer_name", models.CharField(max_length=15)),
+                ("customer_name", models.CharField(max_length=50)),
                 ("pickup_address", models.CharField(max_length=15)),
                 ("delivery_address", models.CharField(max_length=15)),
                 (

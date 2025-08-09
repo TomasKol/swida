@@ -23,7 +23,7 @@ class Order(models.Model):
     driver = models.ForeignKey(
         "Driver", null=True, blank=True, on_delete=models.SET_NULL
     )
-    customer_name = models.CharField(max_length=15)
+    customer_name = models.CharField(max_length=50)
     pickup_address = models.CharField(max_length=15)
     delivery_address = models.CharField(max_length=15)
     weight = models.FloatField(help_text="Total weight of the load in kg")
