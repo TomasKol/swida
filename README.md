@@ -7,7 +7,6 @@ make sure you have `Python 3.13` and `uv` installed
 1. download the repo:
 ```
 git clone https://github.com/TomasKol/swida.git
-
 ```
 2. sut up the project:
 
@@ -18,7 +17,6 @@ uv sync
 3. spin up local SQLite DB:
 ```
 uv run manage.py migrate
-
 uv run manage.py loaddata initial_db_data.json
 ```
 4. spin up local server:
@@ -44,7 +42,7 @@ Swagger docs available at `/api/schema/swagger-ui/`
     O }o--o| D : "Driver to be assigned to Order"
     O }o--o| V : "Vehicle to be assigned to Order"
     V ||--o{ P : "Vehicle's positions are tracked"
-    A }o--o{ O : "Pickup address"
-    A }o--o{ O : "Delivery address"
+    A ||--o{ O : "Pickup address"
+    A ||--o{ O : "Delivery address"
 
 ```
