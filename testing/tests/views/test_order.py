@@ -1,5 +1,4 @@
 import pytest
-from rest_framework.test import APIClient
 
 from testing.factoryboy import (
     AddressFactory,
@@ -35,10 +34,10 @@ def order_factory(base_coord: int = 1) -> Order:
     )
 
 
-def test_orders_list(db):
+def test_orders_list(db, api_client):
     """Test GET at /api/orders/ 200"""
 
-    client = APIClient()
+    #
     create_fixtures()
 
     # let's have one order with assigned driver and vehicle to see the nested objects
@@ -51,7 +50,7 @@ def test_orders_list(db):
         delivery_address=AddressFactory(x_coordinate=0.5, y_coordinate=0.5),
     )
 
-    response = client.get(URL)
+    response = api_client.get(URL)
     assert response.status_code == 200
     response_json = response.json()
 
@@ -138,10 +137,9 @@ def test_orders_list(db):
     ]
 
 
-def test_orders_create_201(db):
+def test_orders_create_201(db, api_client):
     """Test POST at /api/orders/ 201"""
 
-    client = APIClient()
     data = {
         "order_number": "ecv",
         "customer_name": "Anicka Ancovicka",
@@ -158,7 +156,7 @@ def test_orders_create_201(db):
         "weight": 12.3,
         # new orders don't have drivers and vehicles assigned by the logic
     }
-    response = client.post(URL, data, format="json")
+    response = api_client.post(URL, data, format="json")
     assert response.status_code == 201
     response_json = response.json()
     response_json.pop("date_created")
@@ -185,12 +183,11 @@ def test_orders_create_201(db):
     }
 
 
-def test_orders_create_missing_fields(db):
+def test_orders_create_missing_fields(db, api_client):
     """Test POST at /api/orders/ 400"""
 
-    client = APIClient()
     data = {}
-    response = client.post(URL, data)
+    response = api_client.post(URL, data)
     assert response.status_code == 400
     assert response.json() == {
         "order_number": ["This field is required."],
@@ -201,10 +198,9 @@ def test_orders_create_missing_fields(db):
     }
 
 
-def test_orders_create_same_addresses_400(db):
+def test_orders_create_same_addresses_400(db, api_client):
     """Test POST at /api/orders/ 400 - addresses are the same"""
 
-    client = APIClient()
     data = {
         "order_number": "ecv",
         "customer_name": "Anicka Ancovicka",
@@ -221,7 +217,7 @@ def test_orders_create_same_addresses_400(db):
         "weight": 12.3,
         # new orders don't have drivers and vehicles assigned by the logic
     }
-    response = client.post(URL, data, format="json")
+    response = api_client.post(URL, data, format="json")
     assert response.status_code == 400
     assert response.json() == {
         "non_field_errors": [
@@ -230,13 +226,12 @@ def test_orders_create_same_addresses_400(db):
     }
 
 
-def test_orders_detail_get_200(db):
+def test_orders_detail_get_200(db, api_client):
     """Test GET at /api/orders/<id> 200"""
 
-    client = APIClient()
     order = order_factory()
 
-    response = client.get(f"{URL}{order.pk}/")
+    response = api_client.get(f"{URL}{order.pk}/")
     assert response.status_code == 200
     response_json = response.json()
     response_json.pop("date_created")
@@ -276,14 +271,13 @@ def test_orders_detail_get_200(db):
     }
 
 
-def test_orders_detail_patch_200(db):
+def test_orders_detail_patch_200(db, api_client):
     """Test PATCH at /api/orders/<id> 200"""
 
-    client = APIClient()
     order = order_factory()
 
     data = {"order_number": "edited ON"}
-    response = client.patch(f"{URL}{order.pk}/", data)
+    response = api_client.patch(f"{URL}{order.pk}/", data)
     assert response.status_code == 200
     response_json = response.json()
     response_json.pop("date_created")
@@ -323,26 +317,24 @@ def test_orders_detail_patch_200(db):
     }
 
 
-def test_orders_detail_patch_400_invalid_orders_type(db):
+def test_orders_detail_patch_400_invalid_orders_type(db, api_client):
     """Test PATCH at /api/orders/<id> 200"""
 
-    client = APIClient()
     order = order_factory()
     data = {
         "order_number": "edited ON",
         "status": "sunbathing",
     }
-    response = client.patch(f"{URL}{order.pk}/", data)
+    response = api_client.patch(f"{URL}{order.pk}/", data)
     assert response.status_code == 400
     assert response.json() == {"status": ['"sunbathing" is not a valid choice.']}
 
 
-def test_orders_detail_delete_204(db):
+def test_orders_detail_delete_204(db, api_client):
     """Test DELETE at /api/orders/<id> 204"""
 
-    client = APIClient()
     order = order_factory()
-    response = client.delete(f"{URL}{order.pk}/")
+    response = api_client.delete(f"{URL}{order.pk}/")
     assert response.status_code == 204
 
     # assert it's really gone
