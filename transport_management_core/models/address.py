@@ -9,3 +9,6 @@ class Address(models.Model):
     address = models.CharField(max_length=100, default="")
     x_coordinate = models.FloatField()
     y_coordinate = models.FloatField()
+
+    class Meta:
+        unique_together = ("x_coordinate", "y_coordinate")

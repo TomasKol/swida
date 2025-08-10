@@ -1,6 +1,9 @@
 """Django ORM model for Order"""
 
+from math import sqrt
+
 from django.db import models
+from django.utils.functional import cached_property
 
 
 class OrderStatusChoices(models.TextChoices):
@@ -35,6 +38,15 @@ class Order(models.Model):
         choices=OrderStatusChoices.choices, default=OrderStatusChoices.NEW
     )
     date_created = models.DateTimeField(auto_now_add=True)
+
+    @cached_property
+    def distance(self):
+        """Get distance between pickup and delivery address"""
+        return sqrt(
+            (self.pickup_address.x_coordinate - self.delivery_address.x_coordinate) ** 2
+            + (self.pickup_address.y_coordinate - self.delivery_address.y_coordinate)
+            ** 2
+        )
 
     def __str__(self):
         return f"{self.order_number} - {self.status}"

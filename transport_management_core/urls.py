@@ -5,6 +5,7 @@ from transport_management_core.views.views_driver import (
     DriverListView,
 )
 from transport_management_core.views.views_order import (
+    AssignOptimalVehicleView,
     OrderDetailView,
     OrderListView,
 )
@@ -21,6 +22,9 @@ urlpatterns = [
     path("/drivers/<int:pk>/", DriverDetailView.as_view()),
     path("/orders/", OrderListView.as_view()),
     path("/orders/<int:pk>/", OrderDetailView.as_view()),
+    path(
+        "/orders/<int:pk>/assign-optimal-vehicle/", AssignOptimalVehicleView.as_view()
+    ),
     path("/vehicles/", VehicleListView.as_view()),
     path("/vehicles/<int:pk>/", VehicleDetailView.as_view()),
     path("/positions/", PositionCreateView.as_view()),

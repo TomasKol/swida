@@ -2,24 +2,43 @@ import pytest
 from rest_framework.test import APIClient
 
 from testing.factoryboy import (
+    AddressFactory,
     DriverFactory,
     OrderFactory,
     VehicleFactory,
 )
 from transport_management_core.models.order import Order, OrderStatusChoices
 
-client = APIClient()
 URL = "/api/orders/"
 
 
 def create_fixtures(number: int = 2):
     for num in range(number):
-        OrderFactory(driver=None, vehicle=None, order_number=f"order number {num}")
+        OrderFactory(
+            driver=None,
+            vehicle=None,
+            order_number=f"order number {num}",
+            pickup_address=AddressFactory(x_coordinate=num, y_coordinate=num),
+            delivery_address=AddressFactory(
+                x_coordinate=num + 0.1, y_coordinate=num + 0.1
+            ),
+        )
+
+
+def order_factory(base_coord: int = 1) -> Order:
+    """Create an Order instance with dynamic Address coordinates stemming from the base_coord"""
+    return OrderFactory(
+        pickup_address=AddressFactory(x_coordinate=base_coord, y_coordinate=base_coord),
+        delivery_address=AddressFactory(
+            x_coordinate=base_coord + 1, y_coordinate=base_coord + 1
+        ),
+    )
 
 
 def test_orders_list(db):
     """Test GET at /api/orders/ 200"""
 
+    client = APIClient()
     create_fixtures()
 
     # let's have one order with assigned driver and vehicle to see the nested objects
@@ -28,6 +47,8 @@ def test_orders_list(db):
         vehicle=VehicleFactory(),
         order_number="order number",
         status=OrderStatusChoices.IN_TRANSIT,
+        pickup_address=AddressFactory(x_coordinate=10, y_coordinate=10),
+        delivery_address=AddressFactory(x_coordinate=0.5, y_coordinate=0.5),
     )
 
     response = client.get(URL)
@@ -45,14 +66,14 @@ def test_orders_list(db):
             "pickup_address": {
                 "id": 1,
                 "address": "",
-                "x_coordinate": -1.0,
-                "y_coordinate": -1.0,
+                "x_coordinate": 0.0,
+                "y_coordinate": 0.0,
             },
             "delivery_address": {
                 "id": 2,
                 "address": "",
-                "x_coordinate": -1.0,
-                "y_coordinate": -1.0,
+                "x_coordinate": 0.1,
+                "y_coordinate": 0.1,
             },
             "order_number": "order number 0",
             "customer_name": "",
@@ -66,14 +87,14 @@ def test_orders_list(db):
             "pickup_address": {
                 "id": 3,
                 "address": "",
-                "x_coordinate": -1.0,
-                "y_coordinate": -1.0,
+                "x_coordinate": 1.0,
+                "y_coordinate": 1.0,
             },
             "delivery_address": {
                 "id": 4,
                 "address": "",
-                "x_coordinate": -1.0,
-                "y_coordinate": -1.0,
+                "x_coordinate": 1.1,
+                "y_coordinate": 1.1,
             },
             "order_number": "order number 1",
             "customer_name": "",
@@ -100,14 +121,14 @@ def test_orders_list(db):
             "pickup_address": {
                 "id": 5,
                 "address": "",
-                "x_coordinate": -1.0,
-                "y_coordinate": -1.0,
+                "x_coordinate": 10.0,
+                "y_coordinate": 10.0,
             },
             "delivery_address": {
                 "id": 6,
                 "address": "",
-                "x_coordinate": -1.0,
-                "y_coordinate": -1.0,
+                "x_coordinate": 0.5,
+                "y_coordinate": 0.5,
             },
             "order_number": "order number",
             "customer_name": "",
@@ -120,6 +141,7 @@ def test_orders_list(db):
 def test_orders_create_201(db):
     """Test POST at /api/orders/ 201"""
 
+    client = APIClient()
     data = {
         "order_number": "ecv",
         "customer_name": "Anicka Ancovicka",
@@ -166,6 +188,7 @@ def test_orders_create_201(db):
 def test_orders_create_missing_fields(db):
     """Test POST at /api/orders/ 400"""
 
+    client = APIClient()
     data = {}
     response = client.post(URL, data)
     assert response.status_code == 400
@@ -181,6 +204,7 @@ def test_orders_create_missing_fields(db):
 def test_orders_create_same_addresses_400(db):
     """Test POST at /api/orders/ 400 - addresses are the same"""
 
+    client = APIClient()
     data = {
         "order_number": "ecv",
         "customer_name": "Anicka Ancovicka",
@@ -209,7 +233,8 @@ def test_orders_create_same_addresses_400(db):
 def test_orders_detail_get_200(db):
     """Test GET at /api/orders/<id> 200"""
 
-    order = OrderFactory()
+    client = APIClient()
+    order = order_factory()
 
     response = client.get(f"{URL}{order.pk}/")
     assert response.status_code == 200
@@ -235,14 +260,14 @@ def test_orders_detail_get_200(db):
         "pickup_address": {
             "id": 1,
             "address": "",
-            "x_coordinate": -1.0,
-            "y_coordinate": -1.0,
+            "x_coordinate": 1.0,
+            "y_coordinate": 1.0,
         },
         "delivery_address": {
             "id": 2,
             "address": "",
-            "x_coordinate": -1.0,
-            "y_coordinate": -1.0,
+            "x_coordinate": 2.0,
+            "y_coordinate": 2.0,
         },
         "order_number": "",
         "customer_name": "",
@@ -254,7 +279,8 @@ def test_orders_detail_get_200(db):
 def test_orders_detail_patch_200(db):
     """Test PATCH at /api/orders/<id> 200"""
 
-    order = OrderFactory()
+    client = APIClient()
+    order = order_factory()
 
     data = {"order_number": "edited ON"}
     response = client.patch(f"{URL}{order.pk}/", data)
@@ -281,14 +307,14 @@ def test_orders_detail_patch_200(db):
         "pickup_address": {
             "id": 1,
             "address": "",
-            "x_coordinate": -1.0,
-            "y_coordinate": -1.0,
+            "x_coordinate": 1.0,
+            "y_coordinate": 1.0,
         },
         "delivery_address": {
             "id": 2,
             "address": "",
-            "x_coordinate": -1.0,
-            "y_coordinate": -1.0,
+            "x_coordinate": 2.0,
+            "y_coordinate": 2.0,
         },
         "order_number": "edited ON",
         "customer_name": "",
@@ -300,8 +326,8 @@ def test_orders_detail_patch_200(db):
 def test_orders_detail_patch_400_invalid_orders_type(db):
     """Test PATCH at /api/orders/<id> 200"""
 
-    order = OrderFactory()
-
+    client = APIClient()
+    order = order_factory()
     data = {
         "order_number": "edited ON",
         "status": "sunbathing",
@@ -314,10 +340,11 @@ def test_orders_detail_patch_400_invalid_orders_type(db):
 def test_orders_detail_delete_204(db):
     """Test DELETE at /api/orders/<id> 204"""
 
-    order = OrderFactory()
-
+    client = APIClient()
+    order = order_factory()
     response = client.delete(f"{URL}{order.pk}/")
     assert response.status_code == 204
 
+    # assert it's really gone
     with pytest.raises(Order.DoesNotExist):
         Order.objects.get(pk=order.pk)

@@ -2,7 +2,6 @@ import pytest
 from rest_framework.test import APIClient
 
 from testing.factoryboy import PositionFactory, VehicleFactory
-from transport_management_core.models.position import Position
 from transport_management_core.models.vehicle import Vehicle, VehicleTypeChoices
 
 client = APIClient()

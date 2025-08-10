@@ -2,6 +2,7 @@
 
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
+
 from transport_management_core.models import Address, Order
 from transport_management_core.serializers.serializers_address import AddressSerializer
 from transport_management_core.serializers.serializers_driver import DriverSerializer
@@ -39,16 +40,16 @@ class OrderSerializer(serializers.ModelSerializer):
         pickup_address = attrs.get("pickup_address")
         delivery_address = attrs.get("delivery_address")
         if (
-            pickup_address is not None 
-            and delivery_address is not None 
-            and pickup_address["x_coordinate"] == delivery_address["x_coordinate"] 
+            pickup_address is not None
+            and delivery_address is not None
+            and pickup_address["x_coordinate"] == delivery_address["x_coordinate"]
             and pickup_address["y_coordinate"] == delivery_address["y_coordinate"]
-        ):            
-            raise ValidationError(detail="pickup and delivery address mut not have the same coordinates")
-        
-        
-        return attrs
+        ):
+            raise ValidationError(
+                detail="pickup and delivery address mut not have the same coordinates"
+            )
 
+        return attrs
 
     class Meta:
         model = Order
@@ -58,4 +59,15 @@ class OrderSerializer(serializers.ModelSerializer):
 class AssignOptimalVehicleSerializer(serializers.Serializer):
     """Serializer for the AssignOptimalVehicle view"""
 
-    data = serializers.CharField()
+    assigned_vehicle = serializers.CharField()
+    assigned_driver = serializers.CharField()
+    estimated_cost_pickup = serializers.FloatField()
+    estimated_cost_total = serializers.FloatField()
+    distance_km = serializers.FloatField()
+    reasoning = serializers.CharField()
+
+    def update(self, instance, validated_data):
+        raise NotImplementedError("Update operation is not implemented")
+
+    def create(self, instance, validated_data):
+        raise NotImplementedError("Create operation is not implemented")

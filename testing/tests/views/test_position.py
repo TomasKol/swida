@@ -1,4 +1,3 @@
-import pytest
 from rest_framework.test import APIClient
 
 from testing.factoryboy import VehicleFactory

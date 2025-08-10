@@ -4,9 +4,6 @@ from transport_management_core.models import Address, Driver, Order, Position, V
 
 
 class AddressFactory(factory.django.DjangoModelFactory):
-    x_coordinate = -1
-    y_coordinate = -1
-
     class Meta:
         model = Address
 
