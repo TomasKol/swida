@@ -1,0 +1,406 @@
+[
+    {
+        "model": "transport_management_core.address",
+        "pk": 1,
+        "fields": {
+            "address": "aaa",
+            "x_coordinate": 123.0,
+            "y_coordinate": 159.0
+        }
+    },
+    {
+        "model": "transport_management_core.address",
+        "pk": 2,
+        "fields": {
+            "address": "bbb",
+            "x_coordinate": 234.0,
+            "y_coordinate": 234.0
+        }
+    },
+    {
+        "model": "transport_management_core.address",
+        "pk": 3,
+        "fields": {
+            "address": "gusto 1",
+            "x_coordinate": 1.0,
+            "y_coordinate": 1.0
+        }
+    },
+    {
+        "model": "transport_management_core.address",
+        "pk": 4,
+        "fields": {
+            "address": "gusto faaar",
+            "x_coordinate": 90.0,
+            "y_coordinate": 90.0
+        }
+    },
+    {
+        "model": "transport_management_core.address",
+        "pk": 5,
+        "fields": {
+            "address": "company address",
+            "x_coordinate": 777.0,
+            "y_coordinate": 777.0
+        }
+    },
+    {
+        "model": "transport_management_core.address",
+        "pk": 6,
+        "fields": {
+            "address": "send there",
+            "x_coordinate": 987.0,
+            "y_coordinate": 789.0
+        }
+    },
+    {
+        "model": "transport_management_core.driver",
+        "pk": 1,
+        "fields": {
+            "name": "Anicka Ancovicka",
+            "phone_number": "123",
+            "license_number": "license - ancovicka",
+            "is_available": true
+        }
+    },
+    {
+        "model": "transport_management_core.driver",
+        "pk": 2,
+        "fields": {
+            "name": "Jean Bacla",
+            "phone_number": "456",
+            "license_number": "license - bacla",
+            "is_available": true
+        }
+    },
+    {
+        "model": "transport_management_core.driver",
+        "pk": 3,
+        "fields": {
+            "name": "Cicer O",
+            "phone_number": "789",
+            "license_number": "licence - cicero",
+            "is_available": false
+        }
+    },
+    {
+        "model": "transport_management_core.driver",
+        "pk": 4,
+        "fields": {
+            "name": "Driver One",
+            "phone_number": "111",
+            "license_number": "licence - driver",
+            "is_available": false
+        }
+    },
+    {
+        "model": "transport_management_core.order",
+        "pk": 1,
+        "fields": {
+            "order_number": "order something",
+            "vehicle": null,
+            "driver": null,
+            "customer_name": "customer 1",
+            "pickup_address": 1,
+            "delivery_address": 2,
+            "weight": 123.0,
+            "status": "new",
+            "date_created": "2025-08-09T14:55:09.959Z"
+        }
+    },
+    {
+        "model": "transport_management_core.order",
+        "pk": 2,
+        "fields": {
+            "order_number": "order the same",
+            "vehicle": null,
+            "driver": null,
+            "customer_name": "customer 1",
+            "pickup_address": 1,
+            "delivery_address": 2,
+            "weight": 123.0,
+            "status": "new",
+            "date_created": "2025-08-09T15:08:27.230Z"
+        }
+    },
+    {
+        "model": "transport_management_core.order",
+        "pk": 3,
+        "fields": {
+            "order_number": "25-08-001",
+            "vehicle": null,
+            "driver": null,
+            "customer_name": "Gusto Mer",
+            "pickup_address": 3,
+            "delivery_address": 4,
+            "weight": 1.0,
+            "status": "new",
+            "date_created": "2025-08-10T15:33:27.472Z"
+        }
+    },
+    {
+        "model": "transport_management_core.order",
+        "pk": 4,
+        "fields": {
+            "order_number": "25-08-002",
+            "vehicle": null,
+            "driver": null,
+            "customer_name": "A Company",
+            "pickup_address": 5,
+            "delivery_address": 6,
+            "weight": 1000.0,
+            "status": "new",
+            "date_created": "2025-08-10T15:38:23.489Z"
+        }
+    },
+    {
+        "model": "transport_management_core.position",
+        "pk": 1,
+        "fields": {
+            "vehicle": 1,
+            "x_coordinate": 123.0,
+            "y_coordinate": 234.0,
+            "timestamp": "2025-08-09T12:17:35.235Z"
+        }
+    },
+    {
+        "model": "transport_management_core.position",
+        "pk": 2,
+        "fields": {
+            "vehicle": 1,
+            "x_coordinate": 234.0,
+            "y_coordinate": 345.0,
+            "timestamp": "2025-08-09T13:21:43.279Z"
+        }
+    },
+    {
+        "model": "transport_management_core.position",
+        "pk": 3,
+        "fields": {
+            "vehicle": 1,
+            "x_coordinate": 456.0,
+            "y_coordinate": 854.0,
+            "timestamp": "2025-08-09T13:25:43.279Z"
+        }
+    },
+    {
+        "model": "transport_management_core.position",
+        "pk": 4,
+        "fields": {
+            "vehicle": 1,
+            "x_coordinate": 789.0,
+            "y_coordinate": 153.0,
+            "timestamp": "2025-08-09T17:21:43.279Z"
+        }
+    },
+    {
+        "model": "transport_management_core.position",
+        "pk": 5,
+        "fields": {
+            "vehicle": 1,
+            "x_coordinate": 896.0,
+            "y_coordinate": 789.0,
+            "timestamp": "2025-08-09T18:21:43.279Z"
+        }
+    },
+    {
+        "model": "transport_management_core.position",
+        "pk": 6,
+        "fields": {
+            "vehicle": 2,
+            "x_coordinate": 123.0,
+            "y_coordinate": 123.0,
+            "timestamp": "2025-08-09T18:21:43.279Z"
+        }
+    },
+    {
+        "model": "transport_management_core.position",
+        "pk": 7,
+        "fields": {
+            "vehicle": 3,
+            "x_coordinate": 11.0,
+            "y_coordinate": 11.0,
+            "timestamp": "2025-08-09T18:21:43.279Z"
+        }
+    },
+    {
+        "model": "transport_management_core.position",
+        "pk": 8,
+        "fields": {
+            "vehicle": 4,
+            "x_coordinate": 22.0,
+            "y_coordinate": 22.0,
+            "timestamp": "2025-08-09T18:21:43.279Z"
+        }
+    },
+    {
+        "model": "transport_management_core.position",
+        "pk": 9,
+        "fields": {
+            "vehicle": 5,
+            "x_coordinate": 33.0,
+            "y_coordinate": 33.0,
+            "timestamp": "2025-08-09T18:21:43.279Z"
+        }
+    },
+    {
+        "model": "transport_management_core.position",
+        "pk": 10,
+        "fields": {
+            "vehicle": 6,
+            "x_coordinate": 444.0,
+            "y_coordinate": 444.0,
+            "timestamp": "2025-08-09T18:21:43.279Z"
+        }
+    },
+    {
+        "model": "transport_management_core.position",
+        "pk": 11,
+        "fields": {
+            "vehicle": 7,
+            "x_coordinate": 555.0,
+            "y_coordinate": 555.0,
+            "timestamp": "2025-08-09T18:21:43.279Z"
+        }
+    },
+    {
+        "model": "transport_management_core.position",
+        "pk": 12,
+        "fields": {
+            "vehicle": 8,
+            "x_coordinate": 123.0,
+            "y_coordinate": 321.0,
+            "timestamp": "2025-08-09T18:21:43.279Z"
+        }
+    },
+    {
+        "model": "transport_management_core.position",
+        "pk": 13,
+        "fields": {
+            "vehicle": 9,
+            "x_coordinate": 234.0,
+            "y_coordinate": 43.0,
+            "timestamp": "2025-08-09T18:21:43.279Z"
+        }
+    },
+    {
+        "model": "transport_management_core.position",
+        "pk": 14,
+        "fields": {
+            "vehicle": 10,
+            "x_coordinate": 4.0,
+            "y_coordinate": 1.0,
+            "timestamp": "2025-08-09T18:21:43.279Z"
+        }
+    },
+    {
+        "model": "transport_management_core.vehicle",
+        "pk": 1,
+        "fields": {
+            "license_plate_number": "vehicle 1",
+            "vehicle_type": "truck",
+            "max_capacity": 1235,
+            "cost_per_km": 12.5,
+            "is_available": true
+        }
+    },
+    {
+        "model": "transport_management_core.vehicle",
+        "pk": 2,
+        "fields": {
+            "license_plate_number": "veh 2",
+            "vehicle_type": "van",
+            "max_capacity": 152,
+            "cost_per_km": 8.5,
+            "is_available": true
+        }
+    },
+    {
+        "model": "transport_management_core.vehicle",
+        "pk": 3,
+        "fields": {
+            "license_plate_number": "veh not available",
+            "vehicle_type": "van",
+            "max_capacity": 12,
+            "cost_per_km": 12.0,
+            "is_available": false
+        }
+    },
+    {
+        "model": "transport_management_core.vehicle",
+        "pk": 4,
+        "fields": {
+            "license_plate_number": "veh available but small",
+            "vehicle_type": "van",
+            "max_capacity": 1,
+            "cost_per_km": 12.0,
+            "is_available": true
+        }
+    },
+    {
+        "model": "transport_management_core.vehicle",
+        "pk": 5,
+        "fields": {
+            "license_plate_number": "PO111PO",
+            "vehicle_type": "truck",
+            "max_capacity": 200,
+            "cost_per_km": 10.0,
+            "is_available": true
+        }
+    },
+    {
+        "model": "transport_management_core.vehicle",
+        "pk": 6,
+        "fields": {
+            "license_plate_number": "KE222KE",
+            "vehicle_type": "truck",
+            "max_capacity": 500,
+            "cost_per_km": 12.0,
+            "is_available": false
+        }
+    },
+    {
+        "model": "transport_management_core.vehicle",
+        "pk": 7,
+        "fields": {
+            "license_plate_number": "KS333KS",
+            "vehicle_type": "truck",
+            "max_capacity": 100,
+            "cost_per_km": 256.0,
+            "is_available": true
+        }
+    },
+    {
+        "model": "transport_management_core.vehicle",
+        "pk": 8,
+        "fields": {
+            "license_plate_number": "BA444BA",
+            "vehicle_type": "van",
+            "max_capacity": 9999,
+            "cost_per_km": 0.001,
+            "is_available": false
+        }
+    },
+    {
+        "model": "transport_management_core.vehicle",
+        "pk": 9,
+        "fields": {
+            "license_plate_number": "PP555PP",
+            "vehicle_type": "van",
+            "max_capacity": 987,
+            "cost_per_km": 45.0,
+            "is_available": true
+        }
+    },
+    {
+        "model": "transport_management_core.vehicle",
+        "pk": 10,
+        "fields": {
+            "license_plate_number": "BB000BB",
+            "vehicle_type": "van",
+            "max_capacity": 345,
+            "cost_per_km": 3.33,
+            "is_available": false
+        }
+    }
+]
