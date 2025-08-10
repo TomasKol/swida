@@ -8,11 +8,11 @@ make sure you have `Python 3.13` and `uv` installed
 ```
 git clone https://github.com/TomasKol/swida.git
 
-cd swida
 ```
 2. sut up the project:
 
 ```
+cd swida
 uv sync
 ```
 3. spin up local SQLite DB:
